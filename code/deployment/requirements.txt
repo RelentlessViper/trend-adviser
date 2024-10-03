@@ -1,0 +1,11 @@
+yfinance
+numpy
+pandas
+streamlit
+matplotlib
+scikit-learn
+requests
+fastapi
+xgboost
+pydantic
+uvicorn
