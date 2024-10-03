@@ -1,0 +1,25 @@
+# Use an official Python runtime as a parent image
+FROM python:3.10-slim
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+# Ensure the model file is copied (specifically)
+#COPY /models/xgbregressor_v1.pkl /app/code/models/
+
+# Install FastAPI and other dependencies from requirements.txt
+RUN pip install --no-cache-dir --upgrade pip
+#RUN pip install --no-cache-dir --target=/app/ -r requirements.txt
+RUN pip install -r requirements.txt
+RUN pip install uvicorn fastapi
+#RUN pip install fastapi uvicorn pandas numpy xgboost
+ENV PYTHONPATH=/app/packages:$PYTHONPATH
+
+# Expose the port FastAPI will run on
+EXPOSE 80
+
+# Run the FastAPI application with Uvicorn
+CMD ["uvicorn", "application:app", "--host", "0.0.0.0", "--port", "80"]
